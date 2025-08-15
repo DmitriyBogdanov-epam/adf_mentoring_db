@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_SRC_SINK_DataLakeMovies'"
 		},
+		"LS_Git_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_Git'"
+		},
 		"LS_SINK_movies_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "azure-mentoring-db.database.windows.net"
@@ -66,6 +70,18 @@
 		"LS_Sink_DataMart_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "etl"
+		},
+		"LS_Git_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "azure-mentoring-db.database.windows.net"
+		},
+		"LS_Git_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "movies"
+		},
+		"LS_Git_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dmitriy"
 		}
 	},
 	"variables": {
@@ -5006,6 +5022,28 @@
 				"[concat(variables('factoryId'), '/datasets/DS_SQL_DataMart_dbo_FactOnlinePurchase')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SQL_DataMart_FactOnlinePurchase_MonthlySnapshot')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_Git')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('LS_Git_properties_typeProperties_server')]",
+					"database": "[parameters('LS_Git_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('LS_Git_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('LS_Git_password')]"
+					}
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

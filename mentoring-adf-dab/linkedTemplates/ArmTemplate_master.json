@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_SRC_SINK_DataLakeMovies'"
 		},
+		"LS_Git_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_Git'"
+		},
 		"LS_SINK_movies_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "azure-mentoring-db.database.windows.net"
@@ -67,6 +71,18 @@
 			"type": "string",
 			"defaultValue": "etl"
 		},
+		"LS_Git_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "azure-mentoring-db.database.windows.net"
+		},
+		"LS_Git_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "movies"
+		},
+		"LS_Git_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dmitriy"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -100,11 +116,23 @@
 					"LS_SRC_SINK_DataLakeMovies_accountKey": {
 						"value": "[parameters('LS_SRC_SINK_DataLakeMovies_accountKey')]"
 					},
+					"LS_Git_password": {
+						"value": "[parameters('LS_Git_password')]"
+					},
 					"LS_SRC_ADFKeyVault_properties_typeProperties_baseUrl": {
 						"value": "[parameters('LS_SRC_ADFKeyVault_properties_typeProperties_baseUrl')]"
 					},
 					"LS_SRC_SINK_DataLakeMovies_properties_typeProperties_url": {
 						"value": "[parameters('LS_SRC_SINK_DataLakeMovies_properties_typeProperties_url')]"
+					},
+					"LS_Git_properties_typeProperties_server": {
+						"value": "[parameters('LS_Git_properties_typeProperties_server')]"
+					},
+					"LS_Git_properties_typeProperties_database": {
+						"value": "[parameters('LS_Git_properties_typeProperties_database')]"
+					},
+					"LS_Git_properties_typeProperties_userName": {
+						"value": "[parameters('LS_Git_properties_typeProperties_userName')]"
 					},
 					"LS_SINK_movies_properties_typeProperties_server": {
 						"value": "[parameters('LS_SINK_movies_properties_typeProperties_server')]"
@@ -117,9 +145,6 @@
 					},
 					"LS_SRC_BlobStorageMovies_properties_typeProperties_sasUri_secretName": {
 						"value": "[parameters('LS_SRC_BlobStorageMovies_properties_typeProperties_sasUri_secretName')]"
-					},
-					"LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName": {
-						"value": "[parameters('LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName')]"
 					}
 				}
 			},
@@ -138,6 +163,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName": {
+						"value": "[parameters('LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName')]"
 					},
 					"LS_SRC_LocalSQLInstance_properties_typeProperties_server": {
 						"value": "[parameters('LS_SRC_LocalSQLInstance_properties_typeProperties_server')]"

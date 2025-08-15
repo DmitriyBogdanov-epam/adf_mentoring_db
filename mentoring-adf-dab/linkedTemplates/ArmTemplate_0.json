@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_SRC_SINK_DataLakeMovies'"
 		},
+		"LS_Git_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_Git'"
+		},
 		"LS_SRC_ADFKeyVault_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://mentoring-key-vault-dab.vault.azure.net/"
@@ -22,6 +26,18 @@
 		"LS_SRC_SINK_DataLakeMovies_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://azurementoringdatalakedb.dfs.core.windows.net/"
+		},
+		"LS_Git_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "azure-mentoring-db.database.windows.net"
+		},
+		"LS_Git_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "movies"
+		},
+		"LS_Git_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dmitriy"
 		},
 		"LS_SINK_movies_properties_typeProperties_server": {
 			"type": "string",
@@ -38,10 +54,6 @@
 		"LS_SRC_BlobStorageMovies_properties_typeProperties_sasUri_secretName": {
 			"type": "string",
 			"defaultValue": "MentoringBlobStorageMoviesReadSASURI"
-		},
-		"LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName": {
-			"type": "string",
-			"defaultValue": "MentoringBlobStorageOnlineReadSASURI"
 		}
 	},
 	"variables": {
@@ -189,6 +201,28 @@
 			"properties": {
 				"type": "SelfHosted",
 				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_Git')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('LS_Git_properties_typeProperties_server')]",
+					"database": "[parameters('LS_Git_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('LS_Git_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('LS_Git_password')]"
+					}
+				}
 			},
 			"dependsOn": []
 		},
@@ -574,28 +608,6 @@
 							"type": "LinkedServiceReference"
 						},
 						"secretName": "[parameters('LS_SRC_BlobStorageMovies_properties_typeProperties_sasUri_secretName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_SRC_ADFKeyVault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_SRC_BlobStorageOnline')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"sasUri": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_SRC_ADFKeyVault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "[parameters('LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName')]"
 					}
 				}
 			},

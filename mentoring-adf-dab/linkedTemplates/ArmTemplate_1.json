@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "mentoring-adf-dab"
 		},
+		"LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName": {
+			"type": "string",
+			"defaultValue": "MentoringBlobStorageOnlineReadSASURI"
+		},
 		"LS_SRC_LocalSQLInstance_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "EPUADNIW00B3"
@@ -36,6 +40,26 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_SRC_BlobStorageOnline')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"sasUri": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "LS_SRC_ADFKeyVault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LS_SRC_LocalSQLInstance')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -409,7 +433,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SRC_BlobStorageOnline')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_LocalSQLInstanceWatermarks')]",
@@ -1045,60 +1071,6 @@
 				"typeProperties": {
 					"schema": "etl",
 					"table": "tControlMetadata"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SQL_stg_cinema_tickets')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_SINK_movies",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "cinema_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "cinema_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "movie_id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ticket_count",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ticket_price",
-						"type": "decimal",
-						"precision": 4,
-						"scale": 1
-					},
-					{
-						"name": "transaction_id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "transaction_date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "stg",
-					"table": "cinema_tickets"
 				}
 			},
 			"dependsOn": []

@@ -11,6 +11,9 @@
 		"LS_SRC_SINK_DataLakeMovies_accountKey": {
 			"value": ""
 		},
+		"LS_Git_password": {
+			"value": ""
+		},
 		"LS_SINK_movies_properties_typeProperties_server": {
 			"value": "azure-mentoring-db.database.windows.net"
 		},
@@ -49,6 +52,15 @@
 		},
 		"LS_Sink_DataMart_properties_typeProperties_userName": {
 			"value": "etl"
+		},
+		"LS_Git_properties_typeProperties_server": {
+			"value": "azure-mentoring-db.database.windows.net"
+		},
+		"LS_Git_properties_typeProperties_database": {
+			"value": "movies"
+		},
+		"LS_Git_properties_typeProperties_userName": {
+			"value": "dmitriy"
 		}
 	}
 }
