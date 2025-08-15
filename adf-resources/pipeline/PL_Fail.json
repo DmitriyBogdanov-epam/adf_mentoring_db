@@ -1,0 +1,20 @@
+{
+	"name": "PL_Fail",
+	"properties": {
+		"activities": [
+			{
+				"name": "Fail1",
+				"type": "Fail",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"message": "Vasted",
+					"errorCode": "1111111"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-08-13T06:50:15Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

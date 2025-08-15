@@ -1,0 +1,28 @@
+{
+	"name": "LS_SRC_LocalSQLInstance",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "EPUADNIW00B3",
+			"database": "CinemaTickets",
+			"encrypt": "mandatory",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "sa",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_SRC_ADFKeyVault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "LocalSQLPassword"
+			}
+		},
+		"connectVia": {
+			"referenceName": "LocalLaptop",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

@@ -1,0 +1,72 @@
+{
+	"name": "PL_DATA_OrchestateMovings",
+	"properties": {
+		"activities": [
+			{
+				"name": "PL_DATA_CopyMoviesToDataLake",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_DATA_MoviesFromBlobStorageToDataLake",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "PL_DATA_MoviesDataLakeToSQL",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PL_DATA_CopyMoviesToDataLake",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_DATA_MoviesDataLakeToSQL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "PL_DATA_Archive",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PL_DATA_MoviesDataLakeToSQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_DATA_ArchiveFiles",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-08-05T09:00:01Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

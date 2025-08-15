@@ -1,0 +1,24 @@
+{
+	"name": "TR_TestTrigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_DATA_TicketsToAzureSQL",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2025-08-06T14:43:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

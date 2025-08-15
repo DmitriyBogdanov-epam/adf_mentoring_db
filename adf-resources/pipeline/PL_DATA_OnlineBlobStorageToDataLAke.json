@@ -1,0 +1,139 @@
+{
+	"name": "PL_DATA_OnlineBlobStorageToDataLAke",
+	"properties": {
+		"activities": [
+			{
+				"name": "ACT_GEN_Copy_Online",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ACT_GEN_LKP_GetWatermarks",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": false,
+							"modifiedDatetimeStart": {
+								"value": "@activity('ACT_GEN_LKP_GetWatermarks').output.firstRow.Watermark",
+								"type": "Expression"
+							},
+							"modifiedDatetimeEnd": {
+								"value": "@activity('ACT_GEN_LKP_GetWatermarks').output.firstRow.NewWatermark",
+								"type": "Expression"
+							},
+							"wildcardFileName": "*",
+							"deleteFilesAfterCompletion": false
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "PreserveHierarchy"
+						}
+					},
+					"enableStaging": false,
+					"parallelCopies": 32,
+					"dataIntegrationUnits": 4
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_BlobStorageOnlineBinary",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DataLakeOnline",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "ACT_GEN_LKP_GetWatermarks",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "-- CREATE TABLE etl.BlobStorageWatermarks\r\n-- (\r\n--     ID smallint NOT NULL IDENTITY(1,1) CONSTRAINT PK_etl_BlobStorageWatermarks_ID PRIMARY KEY\r\n--     ,Path varchar(200) NOT NULL\r\n--     ,Watermark datetime2(3) NOT NULL\r\n--     ,NewWatermark datetime2(3)\r\n-- );\r\n\r\nUPDATE etl.BlobStorageWatermarks\r\nSET NewWatermark = SYSUTCDATETIME()\r\nWHERE Path = '/online';\r\n\r\nSELECT\r\n        Watermark\r\n        ,NewWatermark\r\nFROM etl.BlobStorageWatermarks\r\nWHERE\r\n        Path = '/online';",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_LocalSQLInstanceWatermarks",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "ACT_GEN_SPR_UpdateWatermarks",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "ACT_GEN_Copy_Online",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[etl].[SP_UpdateBlobStorageWatermark]",
+					"storedProcedureParameters": {
+						"Path": {
+							"value": "/online",
+							"type": "String"
+						},
+						"Watremark": {
+							"value": {
+								"value": "@activity('ACT_GEN_LKP_GetWatermarks').output.firstRow.NewWatermark",
+								"type": "Expression"
+							},
+							"type": "DateTime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_SRC_LocalSQLInstance",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-08-08T14:54:32Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

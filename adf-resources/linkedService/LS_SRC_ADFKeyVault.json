@@ -1,0 +1,11 @@
+{
+	"name": "LS_SRC_ADFKeyVault",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://mentoring-key-vault-dab.vault.azure.net/"
+		}
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"name": "LocalLaptop",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

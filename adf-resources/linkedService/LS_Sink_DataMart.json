@@ -1,0 +1,24 @@
+{
+	"name": "LS_Sink_DataMart",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "azure-mentoring-db.database.windows.net",
+			"database": "DataMart",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "etl",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_SRC_ADFKeyVault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "moviesetl"
+			}
+		}
+	}
+}
