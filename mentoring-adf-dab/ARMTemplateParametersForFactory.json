@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "mentoring-adf-dab"
+		},
+		"LS_SRC_Australia Ratings_connectionString": {
+			"value": ""
+		},
+		"LS_SRC_SINK_DataLakeMovies_accountKey": {
+			"value": ""
+		},
+		"LS_SINK_movies_properties_typeProperties_server": {
+			"value": "azure-mentoring-db.database.windows.net"
+		},
+		"LS_SINK_movies_properties_typeProperties_database": {
+			"value": "movies"
+		},
+		"LS_SINK_movies_properties_typeProperties_userName": {
+			"value": "etl"
+		},
+		"LS_SRC_ADFKeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://mentoring-key-vault-dab.vault.azure.net/"
+		},
+		"LS_SRC_BlobStorageMovies_properties_typeProperties_sasUri_secretName": {
+			"value": "MentoringBlobStorageMoviesReadSASURI"
+		},
+		"LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName": {
+			"value": "MentoringBlobStorageOnlineReadSASURI"
+		},
+		"LS_SRC_LocalSQLInstance_properties_typeProperties_server": {
+			"value": "EPUADNIW00B3"
+		},
+		"LS_SRC_LocalSQLInstance_properties_typeProperties_database": {
+			"value": "CinemaTickets"
+		},
+		"LS_SRC_LocalSQLInstance_properties_typeProperties_userName": {
+			"value": "sa"
+		},
+		"LS_SRC_SINK_DataLakeMovies_properties_typeProperties_url": {
+			"value": "https://azurementoringdatalakedb.dfs.core.windows.net/"
+		},
+		"LS_Sink_DataMart_properties_typeProperties_server": {
+			"value": "azure-mentoring-db.database.windows.net"
+		},
+		"LS_Sink_DataMart_properties_typeProperties_database": {
+			"value": "DataMart"
+		},
+		"LS_Sink_DataMart_properties_typeProperties_userName": {
+			"value": "etl"
+		}
+	}
+}

@@ -1,0 +1,187 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "mentoring-adf-dab"
+		},
+		"LS_SRC_Australia Ratings_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SRC_Australia Ratings'"
+		},
+		"LS_SRC_SINK_DataLakeMovies_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_SRC_SINK_DataLakeMovies'"
+		},
+		"LS_SINK_movies_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "azure-mentoring-db.database.windows.net"
+		},
+		"LS_SINK_movies_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "movies"
+		},
+		"LS_SINK_movies_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "etl"
+		},
+		"LS_SRC_ADFKeyVault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://mentoring-key-vault-dab.vault.azure.net/"
+		},
+		"LS_SRC_BlobStorageMovies_properties_typeProperties_sasUri_secretName": {
+			"type": "string",
+			"defaultValue": "MentoringBlobStorageMoviesReadSASURI"
+		},
+		"LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName": {
+			"type": "string",
+			"defaultValue": "MentoringBlobStorageOnlineReadSASURI"
+		},
+		"LS_SRC_LocalSQLInstance_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "EPUADNIW00B3"
+		},
+		"LS_SRC_LocalSQLInstance_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "CinemaTickets"
+		},
+		"LS_SRC_LocalSQLInstance_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		},
+		"LS_SRC_SINK_DataLakeMovies_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://azurementoringdatalakedb.dfs.core.windows.net/"
+		},
+		"LS_Sink_DataMart_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "azure-mentoring-db.database.windows.net"
+		},
+		"LS_Sink_DataMart_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "DataMart"
+		},
+		"LS_Sink_DataMart_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "etl"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "mentoring-adf-dab_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_SRC_Australia Ratings_connectionString": {
+						"value": "[parameters('LS_SRC_Australia Ratings_connectionString')]"
+					},
+					"LS_SRC_SINK_DataLakeMovies_accountKey": {
+						"value": "[parameters('LS_SRC_SINK_DataLakeMovies_accountKey')]"
+					},
+					"LS_SRC_ADFKeyVault_properties_typeProperties_baseUrl": {
+						"value": "[parameters('LS_SRC_ADFKeyVault_properties_typeProperties_baseUrl')]"
+					},
+					"LS_SRC_SINK_DataLakeMovies_properties_typeProperties_url": {
+						"value": "[parameters('LS_SRC_SINK_DataLakeMovies_properties_typeProperties_url')]"
+					},
+					"LS_SINK_movies_properties_typeProperties_server": {
+						"value": "[parameters('LS_SINK_movies_properties_typeProperties_server')]"
+					},
+					"LS_SINK_movies_properties_typeProperties_database": {
+						"value": "[parameters('LS_SINK_movies_properties_typeProperties_database')]"
+					},
+					"LS_SINK_movies_properties_typeProperties_userName": {
+						"value": "[parameters('LS_SINK_movies_properties_typeProperties_userName')]"
+					},
+					"LS_SRC_BlobStorageMovies_properties_typeProperties_sasUri_secretName": {
+						"value": "[parameters('LS_SRC_BlobStorageMovies_properties_typeProperties_sasUri_secretName')]"
+					},
+					"LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName": {
+						"value": "[parameters('LS_SRC_BlobStorageOnline_properties_typeProperties_sasUri_secretName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "mentoring-adf-dab_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_SRC_LocalSQLInstance_properties_typeProperties_server": {
+						"value": "[parameters('LS_SRC_LocalSQLInstance_properties_typeProperties_server')]"
+					},
+					"LS_SRC_LocalSQLInstance_properties_typeProperties_database": {
+						"value": "[parameters('LS_SRC_LocalSQLInstance_properties_typeProperties_database')]"
+					},
+					"LS_SRC_LocalSQLInstance_properties_typeProperties_userName": {
+						"value": "[parameters('LS_SRC_LocalSQLInstance_properties_typeProperties_userName')]"
+					},
+					"LS_Sink_DataMart_properties_typeProperties_server": {
+						"value": "[parameters('LS_Sink_DataMart_properties_typeProperties_server')]"
+					},
+					"LS_Sink_DataMart_properties_typeProperties_database": {
+						"value": "[parameters('LS_Sink_DataMart_properties_typeProperties_database')]"
+					},
+					"LS_Sink_DataMart_properties_typeProperties_userName": {
+						"value": "[parameters('LS_Sink_DataMart_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'mentoring-adf-dab_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "mentoring-adf-dab_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'mentoring-adf-dab_ArmTemplate_1')]"
+			]
+		}
+	]
+}

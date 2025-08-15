@@ -1,0 +1,6 @@
+{
+	"AFDNotifyHTTPURLSecret": {
+		"type": "string",
+		"value": "https://mentoring-key-vault-dab.vault.azure.net/secrets/ADFNotifyHttpPostURL/0d25ea37f7414f5cae92540e103972dd?api-version=7.0"
+	}
+}
