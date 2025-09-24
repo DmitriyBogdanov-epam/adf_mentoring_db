@@ -1,0 +1,286 @@
+{
+	"name": "PL_CopyExcelToSQL",
+	"properties": {
+		"activities": [
+			{
+				"name": "ACT_GEN_CopySheet1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE Sheet1;",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": true,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Employee ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Employee_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Name",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Age",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Age",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Joining Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "JoiningDate",
+									"type": "Date",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "Department",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Department",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Salary ($)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SalaryUSD",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 11
+								}
+							},
+							{
+								"source": {
+									"name": "Comments",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Comments",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_ExcelSheet1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Sheet1Table",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "ACT_GEN_CopySheet2",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ProductID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Product_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProductName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Quantity",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Quantity",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Expiry Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ExpiryDate",
+									"type": "Date",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "Price ($)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Price",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 11
+								}
+							},
+							{
+								"source": {
+									"name": "Discount %",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DiscountPercent",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Notes",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Notes",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_ExcelSheet2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Sheet2Table",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-09-24T11:19:40Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

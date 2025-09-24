@@ -1,0 +1,9 @@
+{
+	"name": "ADFAMLTests",
+	"location": "polandcentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7237cc2a-71c6-4779-8978-ce2a171d4aba",
+		"tenantId": "b41b72d0-4e9f-4c26-8a69-f949f367c91d"
+	}
+}

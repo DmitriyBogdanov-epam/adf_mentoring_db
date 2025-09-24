@@ -1,0 +1,51 @@
+{
+	"name": "DS_Sheet2Table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Product_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductName",
+				"type": "varchar"
+			},
+			{
+				"name": "Quantity",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ExpiryDate",
+				"type": "date"
+			},
+			{
+				"name": "Price",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 2
+			},
+			{
+				"name": "DiscountPercent",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Notes",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Sheet2"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

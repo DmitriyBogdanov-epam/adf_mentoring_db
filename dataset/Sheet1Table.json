@@ -1,0 +1,50 @@
+{
+	"name": "Sheet1Table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Employee_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Age",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "JoiningDate",
+				"type": "date"
+			},
+			{
+				"name": "Department",
+				"type": "varchar"
+			},
+			{
+				"name": "SalaryUSD",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 2
+			},
+			{
+				"name": "Comments",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Sheet1"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

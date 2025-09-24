@@ -1,0 +1,6 @@
+{
+	"name": "LocaLaptop",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
